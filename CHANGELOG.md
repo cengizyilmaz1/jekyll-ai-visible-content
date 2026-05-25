@@ -4,6 +4,7 @@
 
 - Add configurable `linking.skip_tags` support for entity auto-linking, with safe defaults that skip `pre`, `code`, `kbd`, and `samp` content
 - Track nested skipped tags with a stack so entity linking remains disabled until the matching skipped element closes
+- Add configurable `linking.auto_link_content_types` support to limit entity auto-linking to pages, posts, documents, or all rendered content
 
 ## 0.4.6 (2026-04-07)
 

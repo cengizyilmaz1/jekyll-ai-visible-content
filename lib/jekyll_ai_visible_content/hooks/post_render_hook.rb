@@ -48,7 +48,9 @@ module JekyllAiVisibleContent
           return unless config.enabled?
 
           inject_json_ld(doc, config) if config.json_ld['auto_inject']
-          auto_link_entities(doc, config) if config.linking['enable_entity_links']
+          if config.linking['enable_entity_links'] && auto_linkable_content?(doc, config)
+            auto_link_entities(doc, config)
+          end
           inject_ai_resource_links(doc, config) if config.ai_resources['enabled'] && config.ai_resources['auto_inject']
         end
 
@@ -176,6 +178,22 @@ module JekyllAiVisibleContent
 
         def normalize_skip_tags(skip_tags)
           Array(skip_tags).map(&:to_s).map(&:downcase).reject(&:empty?).uniq
+        end
+
+        def auto_linkable_content?(doc, config)
+          content_types = normalize_auto_link_content_types(config.linking['auto_link_content_types'])
+          return true if content_types.include?('all')
+          return true if content_types.include?('pages') && doc.is_a?(Jekyll::Page)
+          return true if content_types.include?('posts') &&
+                         doc.is_a?(Jekyll::Document) &&
+                         doc.collection&.label.to_s == 'posts'
+          return true if content_types.include?('documents') && doc.is_a?(Jekyll::Document)
+
+          false
+        end
+
+        def normalize_auto_link_content_types(content_types)
+          Array(content_types).map(&:to_s).map(&:downcase).reject(&:empty?).uniq
         end
 
         def sanitize_metadata_text(text)

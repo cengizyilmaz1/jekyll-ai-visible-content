@@ -135,6 +135,7 @@ ai_visible_content:
     apply_to_metadata: false                 # Safe default: never inject <a> into head/SEO/JSON-LD/feed fields
     entity_definitions: {}                   # Custom: slug -> {name, url, description}
     skip_tags: [a, script, style, template, pre, code, kbd, samp]
+    auto_link_content_types: [pages, documents]
     max_links_per_entity_per_post: 1
     enable_related_posts: true
     related_posts_limit: 3
@@ -161,6 +162,9 @@ Set `linking.apply_to_metadata: true` only if you explicitly want legacy full-do
 
 `linking.skip_tags` controls which HTML elements are protected from automatic entity linking. The default list avoids
 nested anchors and keeps executable or literal content, such as code blocks and keyboard/output samples, unchanged.
+
+`linking.auto_link_content_types` controls which rendered Jekyll objects receive automatic entity links. Supported
+values are `pages`, `posts`, `documents`, and `all`. The default `[pages, documents]` preserves the historical behavior.
 
 ## Layout Integration
 

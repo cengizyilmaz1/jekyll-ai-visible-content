@@ -119,5 +119,27 @@ RSpec.describe JekyllAiVisibleContent::Hooks::PostRenderHook do
       expect(result).to eq('Redis performance')
       expect(result).not_to include('<')
     end
+
+    it 'allows pages and posts by default' do
+      site = make_site
+      config = JekyllAiVisibleContent.config(site)
+      page = make_page(site)
+      post = make_post(site, '2025-01-15-optimizing-postgresql-queries.md')
+
+      expect(described_class.send(:auto_linkable_content?, page, config)).to be true
+      expect(described_class.send(:auto_linkable_content?, post, config)).to be true
+    end
+
+    it 'can limit auto-linking to posts only' do
+      site = make_site('ai_visible_content' => {
+                         'linking' => { 'auto_link_content_types' => ['posts'] }
+                       })
+      config = JekyllAiVisibleContent.config(site)
+      page = make_page(site)
+      post = make_post(site, '2025-01-15-optimizing-postgresql-queries.md')
+
+      expect(described_class.send(:auto_linkable_content?, page, config)).to be false
+      expect(described_class.send(:auto_linkable_content?, post, config)).to be true
+    end
   end
 end
