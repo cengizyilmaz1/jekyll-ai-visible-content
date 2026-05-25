@@ -134,6 +134,7 @@ ai_visible_content:
     enable_entity_links: true                # Auto-link known entities in post body
     apply_to_metadata: false                 # Safe default: never inject <a> into head/SEO/JSON-LD/feed fields
     entity_definitions: {}                   # Custom: slug -> {name, url, description}
+    skip_tags: [a, script, style, template, pre, code, kbd, samp]
     max_links_per_entity_per_post: 1
     enable_related_posts: true
     related_posts_limit: 3
@@ -157,6 +158,9 @@ ai_visible_content:
 `linking.apply_to_metadata` defaults to `false` to keep metadata as plain text. With this default, entity auto-linking is applied to article body content only and is not applied to `<head>` meta tags, JSON-LD descriptions, or feed summaries.
 
 Set `linking.apply_to_metadata: true` only if you explicitly want legacy full-document linking behavior.
+
+`linking.skip_tags` controls which HTML elements are protected from automatic entity linking. The default list avoids
+nested anchors and keeps executable or literal content, such as code blocks and keyboard/output samples, unchanged.
 
 ## Layout Integration
 
