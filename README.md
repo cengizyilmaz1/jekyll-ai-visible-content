@@ -25,40 +25,40 @@ What `jekyll-seo-tag` does for Google snippets, this gem does for AI answer engi
 
 ```mermaid
 flowchart TD
-  site[Jekyll site] --> config[_config.yml<br/>ai_visible_content]
-  site --> frontMatter[Post and page<br/>front matter]
-  site --> layouts[Layouts and<br/>Liquid tags]
+  site["Jekyll site"] --> config["ai_visible_content config"]
+  site --> content["Posts, pages, and collections"]
+  site --> layouts["Layouts, Liquid tags, and filters"]
 
-  config --> configuration[Configuration<br/>defaults and overrides]
-  frontMatter --> hooks[Post-render hooks]
-  layouts --> tags[Liquid tags<br/>and filters]
+  config --> configuration["Configuration defaults and overrides"]
+  content --> hooks["Post-render hooks"]
+  layouts --> tags["Liquid integration"]
 
-  configuration --> entityRegistry[Entity identity<br/>and topic definitions]
-  entityRegistry --> jsonld[JSON-LD builder]
-  entityRegistry --> linker[Entity auto-linker]
-  entityRegistry --> related[Related posts]
-  configuration --> generators[Static generators]
-  configuration --> validator[Build-time validation]
+  configuration --> entityRegistry["Entity identity and topic definitions"]
+  entityRegistry --> jsonld["JSON-LD builder"]
+  entityRegistry --> linker["Entity auto-linker"]
+  entityRegistry --> related["Related posts"]
+  configuration --> generators["Static generators"]
+  configuration --> validator["Build-time validation"]
 
   hooks --> jsonld
   hooks --> linker
   tags --> jsonld
   tags --> related
 
-  linker --> scope{auto_link_content_types}
-  scope --> pages[pages]
-  scope --> posts[posts]
-  scope --> documents[documents]
-  scope --> all[all]
-  linker --> safeTags[skip_tags<br/>a, script, pre, code...]
+  linker --> scope{"auto_link_content_types"}
+  scope --> pages["pages"]
+  scope --> posts["posts"]
+  scope --> documents["documents"]
+  scope --> all["all"]
+  linker --> safeTags["skip_tags protected elements"]
 
-  jsonld --> html[Rendered HTML]
+  jsonld --> html["Rendered HTML"]
   linker --> html
   related --> html
-  generators --> llms[/llms.txt<br/>/llms-full.txt]
-  generators --> robots[/robots.txt]
-  generators --> entityMap[/entity-map.json]
-  validator --> buildLog[Grouped build warnings]
+  generators --> llms["llms.txt and llms-full.txt"]
+  generators --> robots["robots.txt"]
+  generators --> entityMap["entity-map.json"]
+  validator --> buildLog["Grouped build warnings"]
 ```
 
 ## Installation
